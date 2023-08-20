@@ -1,17 +1,24 @@
-import React from 'react'
+import React from "react";
+import Image from "next/image";
 
 //style
-import styled from '@emotion/styled'
+import styled from "@emotion/styled";
 
-//png
-import bannerImg from 'public/images/banner.png'
-import Image from 'next/image'
+//assets
+import { skeletonURL } from "theme/config";
+import { BannerImg } from "assets/images";
 
 //
 export default function Sec1({ handleFocus }) {
   return (
     <View>
-      <Image src={bannerImg} alt="배너" />
+      <Image
+        src={BannerImg}
+        alt="배너"
+        placeholder="blur"
+        loading="lazy"
+        blurDataURL={skeletonURL}
+      />
 
       <Typo>
         <h1 data-aos="zoom-in">{`블록체인 WEB 3.0\n다크모드 템플릿`}</h1>
@@ -33,7 +40,7 @@ export default function Sec1({ handleFocus }) {
         </button>
       </Typo>
     </View>
-  )
+  );
 }
 
 //styled
@@ -54,7 +61,7 @@ const View = styled.div`
     height: 100%;
     object-fit: cover;
   }
-`
+`;
 
 const Typo = styled.div`
   width: 100%;
@@ -115,4 +122,4 @@ const Typo = styled.div`
       font-size: 15px;
     }
   }
-`
+`;
