@@ -1,38 +1,42 @@
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 //png,svg
-import Logo from 'public/images/logo.svg'
-import InstaIcon from 'public/icons/insta-icon.svg'
-import TwitterIcon from 'public/icons/twitter-icon.svg'
-import YoutubeIcon from 'public/icons/youtube-icon.svg'
+import Logo from "public/images/logo.svg";
+import InstaIcon from "public/icons/insta-icon.svg";
+import TwitterIcon from "public/icons/twitter-icon.svg";
+import YoutubeIcon from "public/icons/youtube-icon.svg";
+import { ToastIcon } from "assets/icons";
 
 //styles
-import styled from '@emotion/styled'
+import styled from "@emotion/styled";
 
 //atoms
-import { useRecoilState } from 'recoil'
-import { drawerAtom } from 'atoms/widgets-atom'
+import { useRecoilState } from "recoil";
+import { drawerAtom } from "atoms/widgets-atom";
 
 //widgets
-import DrawerTab from 'widgets/drawer-tab'
+import DrawerTab from "widgets/drawer-tab";
+import { Box } from "widgets/Container";
+import { IconTab } from "widgets/IconTab";
+import { MQ } from "theme/mediaQuery";
 
 //
 export default function Header({ menuActive, handleFocus }) {
-  const [isDrawer, setIsDrawer] = useRecoilState(drawerAtom)
+  const [isDrawer, setIsDrawer] = useRecoilState(drawerAtom);
 
   // 헤더 고정
-  const [isFixed, setIsFixed] = useState(false)
+  const [isFixed, setIsFixed] = useState(false);
   const scrollActive = () => {
     if (window.scrollY >= 100) {
-      setIsFixed(true)
+      setIsFixed(true);
     } else {
-      setIsFixed(false)
+      setIsFixed(false);
     }
-  }
+  };
   useEffect(() => {
-    window.addEventListener('scroll', scrollActive)
-  }, [])
+    window.addEventListener("scroll", scrollActive);
+  }, []);
 
   return (
     <>
@@ -66,29 +70,39 @@ export default function Header({ menuActive, handleFocus }) {
             <SNSMenus>
               <Menu>
                 <Link href="s">
-                  <InstaIcon fill={isFixed ? '#999' : '#ccc'} />
+                  <InstaIcon fill={isFixed ? "#999" : "#ccc"} />
                 </Link>
               </Menu>
 
               <Menu>
                 <Link href="s">
-                  <TwitterIcon fill={isFixed ? '#999' : '#ccc'} />
+                  <TwitterIcon fill={isFixed ? "#999" : "#ccc"} />
                 </Link>
               </Menu>
 
               <Menu>
                 <Link href="s">
-                  <YoutubeIcon fill={isFixed ? '#999' : '#ccc'} />
+                  <YoutubeIcon fill={isFixed ? "#999" : "#ccc"} />
                 </Link>
               </Menu>
             </SNSMenus>
 
-            <DrawerTab fiil="#e2e2e2" onClick={() => setIsDrawer(!isDrawer)} />
+            <Box css={theme.iconBox}>
+              <IconTab
+                onClick={() => setIsDrawer(!isDrawer)}
+                iconSize={26}
+                css={theme.iconTab}
+              >
+                <ToastIcon fill="#e2e2e2" width="100%" height="auto" />
+              </IconTab>
+            </Box>
+
+            {/* <DrawerTab fiil="#e2e2e2" onClick={() => setIsDrawer(!isDrawer)} /> */}
           </NavView>
         </NavBar>
       </HeaderBar>
     </>
-  )
+  );
 }
 
 // styled
@@ -109,7 +123,7 @@ const HeaderBar = styled.div`
     overflow: hidden;
     white-space: nowrap;
   }
-`
+`;
 
 const NavBar = styled.header`
   z-index: 9000;
@@ -123,14 +137,14 @@ const NavBar = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ isActive }) => (isActive ? '#222' : 'transparent')};
-  border-bottom: ${({ isActive }) => (isActive ? '1px solid #252525' : 'none')};
+  background-color: ${({ isActive }) => (isActive ? "#222" : "transparent")};
+  border-bottom: ${({ isActive }) => (isActive ? "1px solid #252525" : "none")};
 
   @media (max-width: 1080px) {
     height: 58px;
     min-height: 58px;
   }
-`
+`;
 
 const NavView = styled.nav`
   position: relative;
@@ -154,7 +168,7 @@ const NavView = styled.nav`
       width: 100%;
     }
   }
-`
+`;
 
 const SNSMenus = styled.ul`
   display: flex;
@@ -164,7 +178,7 @@ const SNSMenus = styled.ul`
   @media (max-width: 768px) {
     display: none;
   }
-`
+`;
 
 const Menus = styled.ul`
   position: absolute;
@@ -177,7 +191,7 @@ const Menus = styled.ul`
   @media (max-width: 768px) {
     display: none;
   }
-`
+`;
 
 const Menu = styled.li`
   display: flex;
@@ -185,11 +199,11 @@ const Menu = styled.li`
   justify-content: center;
   padding: 10px;
   font-size: 15px;
-  color: ${({ isActive }) => (isActive ? '#D18DFF' : '#e0e0e0')};
+  color: ${({ isActive }) => (isActive ? "#D18DFF" : "#e0e0e0")};
   cursor: pointer;
 
   &:hover {
-    color: ${({ isActive }) => (isActive ? '#C16AFD' : '#fff')};
+    color: ${({ isActive }) => (isActive ? "#C16AFD" : "#fff")};
   }
 
   svg {
@@ -203,4 +217,39 @@ const Menu = styled.li`
       opacity: 0.7;
     }
   }
-`
+`;
+
+const theme = {
+  container: {
+    width: "100%",
+    maxWidth: "1200px",
+    padding: "0 20px",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+
+  logo: {
+    width: "100px",
+    display: "flex",
+    [MQ[1]]: {
+      width: "86px",
+    },
+  },
+
+  iconBox: {
+    width: "auto",
+    display: "none",
+
+    [MQ[1]]: {
+      display: "flex",
+    },
+  },
+
+  iconTab: {
+    [MQ[3]]: {
+      width: "24px",
+      height: "24px",
+    },
+  },
+};
